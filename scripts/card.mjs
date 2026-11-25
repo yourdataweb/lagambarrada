@@ -95,7 +95,7 @@ await card.setContent(
       <div class="copy">
         <div class="kicker">La Gambarrada</div>
         <div class="line">Ja tens pàgina web:</div>
-        <div class="url">${esc(SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, ""))}</div>
+        <div class="url">${esc(SITE_URL)}</div>
       </div>
       <div class="qr"><img src="${qrDataUrl}" alt=""></div>
     </div>
@@ -105,6 +105,20 @@ await card.setContent(
 );
 await card.evaluate(() => document.fonts.ready);
 await new Promise((r) => setTimeout(r, 500));
+const fit = await card.evaluate(() => {
+  const out = {};
+  document.querySelectorAll(".line, .url, .qr").forEach((el) => {
+    const r = el.getBoundingClientRect();
+    out[el.className] = {
+      w: Math.round(r.width), h: Math.round(r.height),
+      x: Math.round(r.x), y: Math.round(r.y),
+      overflowRight: Math.round(r.right) > 1240,
+      scrollOverflow: el.scrollWidth > el.clientWidth + 1,
+    };
+  });
+  return out;
+});
+console.log("card layout:", JSON.stringify(fit));
 const png = await card.screenshot({ type: "png" });
 await browser.close();
 server.close();

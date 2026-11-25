@@ -28,7 +28,7 @@ assets/css/styles.css   all styles, responsive from 320 px up
 assets/js/main.js       mobile navigation, scroll reveal, cookie consent, lazy map
 assets/fonts/           self-hosted Fraunces and Inter (woff2 subset)
 assets/img/             logo, icons, hero artwork, OG image
-assets/photos/          handover card
+assets/photos/handover.png  handover card (tablet capture of the top section + QR, 10.5 x 14.5 cm @300 dpi)
 ```
 
 ## Build
