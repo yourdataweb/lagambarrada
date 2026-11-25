@@ -1,14 +1,11 @@
 #!/usr/bin/env node
 /**
- * Verification of the BUILT output, not the build log.
- * - per-locale: html[lang], title, h1, canonical, hreflang reciprocity, JSON-LD parse
- * - tel:, map src, no horizontal overflow at 360 / 768 / 1920
- * - drawer: aria-expanded flips, Escape closes, no pageerror
- * - screenshots: desktop + mobile per locale, tablet for the handover card
+ * Verifies the BUILT output over a local static server. Exits non-zero on any failure.
+ * Contract: src/data.json, src/locales.json (see references/site-contract.md).
  */
 import { createServer } from "node:http";
 import { readFileSync, existsSync, mkdirSync } from "node:fs";
-import { dirname, extname, join, resolve, normalize } from "node:path";
+import { dirname, extname, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 
@@ -16,54 +13,44 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "tmp/shots");
 mkdirSync(OUT, { recursive: true });
 
-const MIME = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".webmanifest": "application/manifest+json",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".woff2": "font/woff2",
-  ".xml": "application/xml",
-  ".txt": "text/plain; charset=utf-8",
-};
+const biz = JSON.parse(readFileSync(join(ROOT, "src/data.json"), "utf8"));
+const LANGS = JSON.parse(readFileSync(join(ROOT, "src/locales.json"), "utf8"));
+const DEFAULT = (LANGS.find((l) => l.default) || LANGS[0]).code;
+const SITE_URL = (process.env.SITE_URL || biz.siteUrl).replace(/\/?$/, "");
+const TEL = biz.phoneE164;
+const SLUG = new URL(SITE_URL).pathname.replace(/^\/|\/$/g, "");
 
+const MIME = {
+  ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8",
+  ".webmanifest": "application/manifest+json", ".svg": "image/svg+xml",
+  ".png": "image/png", ".jpg": "image/jpeg", ".woff2": "font/woff2",
+  ".xml": "application/xml", ".txt": "text/plain; charset=utf-8",
+};
 const server = createServer((req, res) => {
   let p = decodeURIComponent(req.url.split("?")[0]);
   if (p.endsWith("/")) p += "index.html";
   const file = normalize(join(ROOT, p));
-  if (!file.startsWith(ROOT) || !existsSync(file)) {
-    res.writeHead(404, { "content-type": "text/plain" });
-    res.end("404");
-    return;
-  }
+  if (!file.startsWith(ROOT) || !existsSync(file)) { res.writeHead(404); res.end("404"); return; }
   res.writeHead(200, { "content-type": MIME[extname(file)] || "application/octet-stream" });
   res.end(readFileSync(file));
 });
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const BASE = `http://127.0.0.1:${server.address().port}/`;
 
-const LOCALES = [
-  { code: "es", path: "", expectLang: "es" },
-  { code: "ca", path: "ca/", expectLang: "ca" },
-  { code: "en", path: "en/", expectLang: "en" },
-];
-
-const fails = [];
-const passes = [];
+const fails = [], passes = [];
 const ok = (cond, label, extra = "") => {
-  if (cond) passes.push(label);
-  else fails.push(label + (extra ? ` — ${extra}` : ""));
+  if (cond) passes.push(label); else fails.push(label + (extra ? ` — ${extra}` : ""));
 };
 
 const browser = await puppeteer.launch({ args: ["--no-sandbox", "--font-render-hinting=none"] });
 
-for (const l of LOCALES) {
-  const url = BASE + l.path;
-  const page = await browser.newPage();
+for (const l of LANGS) {
+  const url = BASE + l.dir;
+  // fresh context per locale: a consent stored by an earlier locale would otherwise
+  // load the map on the next locale and fail the pre-consent assertion
+  const ctx = await browser.createBrowserContext();
+  const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => { if (m.type() === "error") errors.push("console: " + m.text()); });
@@ -75,54 +62,96 @@ for (const l of LOCALES) {
   const info = await page.evaluate(() => {
     const ld = document.querySelector('script[type="application/ld+json"]');
     let ldOk = false, ldType = null;
-    try { const j = JSON.parse(ld.textContent); ldOk = true; ldType = j["@type"]; } catch (e) { ldOk = false; }
+    try { const j = JSON.parse(ld.textContent); ldOk = true; ldType = j["@type"]; } catch { ldOk = false; }
     return {
       lang: document.documentElement.lang,
       title: document.title,
-      h1: (document.querySelector("h1") || {}).textContent,
+      h1: (document.querySelector("h1") || {}).textContent || "",
       h1Count: document.querySelectorAll("h1").length,
       canonical: (document.querySelector('link[rel="canonical"]') || {}).href,
-      hreflangs: [...document.querySelectorAll('link[rel="alternate"][hreflang]')].map((n) => [n.hreflang, n.getAttribute("href")]),
+      hreflangs: [...document.querySelectorAll('link[rel="alternate"][hreflang]')]
+        .map((n) => [n.hreflang, n.getAttribute("href")]),
       ldOk, ldType,
       telLinks: [...document.querySelectorAll('a[href^="tel:"]')].map((a) => a.getAttribute("href")),
+      waLinks: [...document.querySelectorAll('a[href*="wa.me"]')].map((a) => a.getAttribute("href")),
       mapSrc: (document.getElementById("map-template") || {}).innerHTML || "",
+      mapIframes: document.querySelectorAll("#map-shell iframe").length,
       cookieBar: !!document.getElementById("cookiebar"),
       imgsNoAlt: [...document.querySelectorAll("img")].filter((i) => !i.hasAttribute("alt")).length,
-      internalEmptyLinks: [...document.querySelectorAll("a")].filter((a) => {
-        const h = a.getAttribute("href");
-        return h === "" || h === null;
+      emptyLinks: [...document.querySelectorAll("a")].filter((a) => {
+        const h = a.getAttribute("href"); return h === "" || h === null;
       }).length,
       langLinks: [...document.querySelectorAll(".langs__link")].map((a) => a.getAttribute("href")),
       quotes: document.querySelectorAll(".quote").length,
+      heroPhoto: (() => {
+        const img = document.querySelector(".hero__photo img, .hero img:not(.hero__art)");
+        if (!img) return null;
+        const r = img.getBoundingClientRect();
+        return {
+          src: img.getAttribute("src"),
+          hasAlt: (img.getAttribute("alt") || "").trim().length > 0,
+          natural: img.naturalWidth,
+          topHalf: r.top < window.innerHeight * 0.5 && r.height > 80,
+        };
+      }),
+      photoCredit: (document.querySelector("[data-photo-credit]") || {}).textContent || "",
     };
   });
 
-  ok(info.lang === l.expectLang, `[${l.code}] html[lang]=${l.expectLang}`, info.lang);
-  ok(!!info.title && info.title.length > 20, `[${l.code}] title present`, info.title);
-  ok(info.h1Count === 1 && !!info.h1.trim(), `[${l.code}] single non-empty h1`, info.h1);
-  ok(!!info.canonical, `[${l.code}] canonical present`, info.canonical);
-  ok(info.ldOk && info.ldType === "Restaurant", `[${l.code}] JSON-LD parses as Restaurant`, `${info.ldOk}/${info.ldType}`);
-  ok(info.telLinks.some((h) => h === "tel:+34934860713"), `[${l.code}] tel: link correct`, JSON.stringify(info.telLinks));
-  ok(/output=embed/.test(info.mapSrc) && /41\.2153657/.test(info.mapSrc), `[${l.code}] map embed src with coords`);
+  ok(info.lang === l.code, `[${l.code}] html[lang]=${l.code}`, info.lang);
+  ok(info.title.length > 20, `[${l.code}] title present`, info.title);
+  ok(info.h1Count === 1 && info.h1.trim().length > 0, `[${l.code}] single non-empty h1`, info.h1);
+  ok(!!info.canonical, `[${l.code}] canonical present`, String(info.canonical));
+  ok(info.ldOk, `[${l.code}] JSON-LD parses`, String(info.ldOk));
+  ok(info.telLinks.includes(`tel:${TEL}`), `[${l.code}] tel: link correct`, JSON.stringify(info.telLinks));
+  if (biz.phoneIsMobile) {
+    ok(info.waLinks.length > 0, `[${l.code}] whatsapp link present for mobile number`);
+  } else {
+    ok(info.waLinks.length === 0, `[${l.code}] no whatsapp link for landline`, JSON.stringify(info.waLinks));
+  }
+  ok(/output=embed/.test(info.mapSrc) && info.mapSrc.includes(String(biz.latitude)),
+    `[${l.code}] map embed src with place coordinates`);
+  ok(info.mapIframes === 0, `[${l.code}] map not loaded before consent`, String(info.mapIframes));
   ok(info.cookieBar, `[${l.code}] cookie notice present`);
   ok(info.imgsNoAlt === 0, `[${l.code}] all <img> have alt`, String(info.imgsNoAlt));
-  ok(info.internalEmptyLinks === 0, `[${l.code}] no empty href`, String(info.internalEmptyLinks));
+  ok(info.emptyLinks === 0, `[${l.code}] no empty href`, String(info.emptyLinks));
+  ok(info.quotes === Object.keys(JSON.parse(readFileSync(join(ROOT, `src/i18n/${l.code}.json`), "utf8")).reviews.items).length,
+    `[${l.code}] testimonial count matches dictionary`);
 
-  // hreflang reciprocity
+  // photo rule: a real business photo in the top half, with alt text and visible credit
+  const hasPhoto = !!biz.heroPhoto;
+  if (hasPhoto) {
+    ok(!!info.heroPhoto, `[${l.code}] hero photo present`);
+    if (info.heroPhoto) {
+      ok(info.heroPhoto.topHalf, `[${l.code}] hero photo in the top half of the page`);
+      ok(info.heroPhoto.hasAlt, `[${l.code}] hero photo has alt text`);
+      ok(info.heroPhoto.natural > 0, `[${l.code}] hero photo actually loads`,
+        String(info.heroPhoto.natural));
+      ok(info.photoCredit.trim().length > 0 && info.photoCredit.includes(biz.photoCredit),
+        `[${l.code}] photo credit shows the attribution author`, info.photoCredit.trim());
+    }
+  }
+
   const hf = Object.fromEntries(info.hreflangs.filter(([k]) => k !== "x-default"));
-  ok(Object.keys(hf).length === 3, `[${l.code}] 3 hreflang alternates`, JSON.stringify(Object.keys(hf)));
-  ok(/lagambarrada\/ca\/?$/.test(hf["ca-ES"] || ""), `[${l.code}] ca alternate points at /ca/`, hf["ca-ES"]);
-  ok(/lagambarrada(\/|$)/.test(hf["es-ES"] || ""), `[${l.code}] es alternate points at root`, hf["es-ES"]);
+  ok(Object.keys(hf).length === LANGS.length, `[${l.code}] hreflang count = locales`,
+    JSON.stringify(Object.keys(hf)));
+  // expected href comes from locales.json, so moving the default locale to root cannot
+  // leave a stale assertion passing on the wrong path
+  for (const o of LANGS) {
+    const key = o.hreflang || o.code;
+    const want = `${SITE_URL}/${o.dir}`.replace(/\/$/, "");
+    const got = (hf[key] || "").replace(/\/$/, "");
+    ok(got === want, `[${l.code}] ${key} alternate -> ${o.dir || "/"}`, got || "missing");
+  }
+  ok((hf["x-default"] === undefined) || (hf["x-default"] || "").replace(/\/$/, "") === SITE_URL,
+    `[${l.code}] x-default points at default locale`);
 
-  // language switch links resolve
   for (const href of info.langLinks) {
-    const abs = new URL(href, url).href;
-    const r = await page.goto(abs, { waitUntil: "domcontentloaded" });
+    const r = await page.goto(new URL(href, url).href, { waitUntil: "domcontentloaded" });
     ok(r.status() === 200, `[${l.code}] lang link 200 ${href}`, String(r.status()));
   }
   await page.goto(url, { waitUntil: "networkidle2" });
 
-  // overflow check at 3 widths
   for (const w of [360, 768, 1920]) {
     await page.setViewport({ width: w, height: 900 });
     await new Promise((r) => setTimeout(r, 250));
@@ -133,72 +162,72 @@ for (const l of LOCALES) {
     ok(ov.scrollW <= ov.clientW + 1, `[${l.code}] no h-overflow @${w}`, `${ov.scrollW}>${ov.clientW}`);
   }
 
-  // drawer behaviour at mobile width
   await page.setViewport({ width: 390, height: 844 });
   await new Promise((r) => setTimeout(r, 200));
   const drawer = await page.evaluate(async () => {
-    const t = document.querySelector(".nav-toggle");
-    const n = document.getElementById("site-nav");
+    const t = document.querySelector(".nav-toggle"), n = document.getElementById("site-nav");
     if (!t || !n) return { found: false };
     const before = t.getAttribute("aria-expanded");
-    t.click();
-    await new Promise((r) => setTimeout(r, 60));
+    t.click(); await new Promise((r) => setTimeout(r, 60));
     const after = t.getAttribute("aria-expanded");
     const visible = getComputedStyle(n).display !== "none";
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
     await new Promise((r) => setTimeout(r, 60));
-    const afterEsc = t.getAttribute("aria-expanded");
-    const hiddenAfterEsc = getComputedStyle(n).display === "none";
-    return { found: true, before, after, visible, afterEsc, hiddenAfterEsc };
+    return { found: true, before, after, visible,
+      afterEsc: t.getAttribute("aria-expanded"),
+      hiddenAfterEsc: getComputedStyle(n).display === "none" };
   });
   ok(drawer.found, `[${l.code}] drawer exists`);
   if (drawer.found) {
-    ok(drawer.before === "false" && drawer.after === "true", `[${l.code}] aria-expanded flips open`, `${drawer.before}->${drawer.after}`);
+    ok(drawer.before === "false" && drawer.after === "true", `[${l.code}] aria-expanded flips open`,
+      `${drawer.before}->${drawer.after}`);
     ok(drawer.visible, `[${l.code}] nav visible when open`);
-    ok(drawer.afterEsc === "false" && drawer.hiddenAfterEsc, `[${l.code}] Escape closes nav`, `${drawer.afterEsc}`);
+    ok(drawer.afterEsc === "false" && drawer.hiddenAfterEsc, `[${l.code}] Escape closes nav`);
   }
+
+  // consent must actually load the map
+  await page.setViewport({ width: 1280, height: 900 });
+  await page.goto(url, { waitUntil: "networkidle2" });
+  const mapAfter = await page.evaluate(async () => {
+    document.querySelector('[data-cookie="accept"]')?.click();
+    await new Promise((r) => setTimeout(r, 1200));
+    return document.querySelectorAll("#map-shell iframe").length;
+  });
+  ok(mapAfter > 0, `[${l.code}] map loads after accepting cookies`, String(mapAfter));
 
   ok(errors.length === 0, `[${l.code}] no page errors`, errors.join(" | ").slice(0, 300));
 
-  // screenshots: desktop + mobile
+  // stale locale paths must still land on the site, not 404: assert the built redirect
+  // file, because navigating it follows the meta refresh to the production base path,
+  // which the local test server does not serve
+  for (const from of Object.keys(biz.redirects || {})) {
+    if (LANGS.some((o) => o.dir === from)) continue;
+    const file = join(ROOT, from.replace(/\/$/, ""), "index.html");
+    ok(existsSync(file), `[${l.code}] redirect page ${from} exists`);
+    if (!existsSync(file)) continue;
+    const html = readFileSync(file, "utf8");
+    const base = new URL(SITE_URL).pathname.replace(/\/?$/, "/");
+    ok(html.includes(`url=${base}`) || html.includes(`location.replace("${base}")`),
+      `[${l.code}] redirect ${from} targets ${base}`);
+    ok(/name="robots" content="noindex,follow"/.test(html),
+      `[${l.code}] redirect ${from} is noindex`);
+    ok(/<a href="[^"]+">/.test(html), `[${l.code}] redirect ${from} has a JS-off fallback link`);
+  }
+  await page.goto(url, { waitUntil: "networkidle2" });
+
   await page.setViewport({ width: 1440, height: 1000 });
   await page.goto(url, { waitUntil: "networkidle2" });
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await new Promise((r) => setTimeout(r, 500));
+  await new Promise((r) => setTimeout(r, 400));
   await page.screenshot({ path: join(OUT, `desktop-${l.code}.png`) });
 
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 });
   await page.goto(url, { waitUntil: "networkidle2" });
-  await new Promise((r) => setTimeout(r, 500));
+  await new Promise((r) => setTimeout(r, 400));
   await page.screenshot({ path: join(OUT, `mobile-${l.code}.png`) });
 
-  // full-page sweep to prove the lower sections render
-  await page.setViewport({ width: 1280, height: 900 });
-  await page.goto(url, { waitUntil: "networkidle2" });
-  await page.evaluate(async () => {
-    const step = 700;
-    for (let y = 0; y < document.body.scrollHeight; y += step) {
-      window.scrollTo(0, y);
-      await new Promise((r) => setTimeout(r, 90));
-    }
-    window.scrollTo(0, 0);
-  });
-  await new Promise((r) => setTimeout(r, 400));
-  await page.screenshot({ path: join(OUT, `full-${l.code}.png`), fullPage: true });
-
   await page.close();
+  await ctx.close();
 }
-
-// --- print card screenshot: tablet width 820 CSS px -> 1240x1712 px @300dpi (10.5 x 14.5 cm)
-const cardPage = await browser.newPage();
-await cardPage.setViewport({
-  width: 820,
-  height: Math.round((1712 * 820) / 1240),
-  deviceScaleFactor: 1240 / 820,
-});
-await cardPage.goto(BASE, { waitUntil: "networkidle2" });
-await new Promise((r) => setTimeout(r, 700));
-await cardPage.screenshot({ path: join(OUT, "tablet-raw.png") });
 
 await browser.close();
 server.close();

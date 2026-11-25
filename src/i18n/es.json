@@ -2,7 +2,7 @@
   "lang": "es",
   "locale": "es_ES",
   "ogLocale": "es_ES",
-  "pathPrefix": "./",
+  "pathPrefix": "../",
   "meta": {
     "title": "La Gambarrada · Restaurante mediterráneo en Vilanova i la Geltrú",
     "description": "Cocina mediterránea y de mar en el Passeig del Carme, 22, Vilanova i la Geltrú. Pescado fresco, arroces y tapas frente al mar. Reserva por teléfono: 934 86 07 13.",
@@ -30,7 +30,9 @@
     "point2": "Terraza exterior junto al paseo marítimo",
     "point3": "Pago con tarjeta y espacio accesible",
     "ratingLabel": "valoración media",
-    "ratingReviews": "opiniones"
+    "ratingReviews": "opiniones",
+    "photoAlt": "Foto del restaurante",
+    "photoCredit": "Foto"
   },
   "about": {
     "eyebrow": "El restaurante",
@@ -134,24 +136,29 @@
       "r1": {
         "text": "Comida buenísima: mejillones a la brasa con romero, croquetas increíbles y un calamar tiernísimo. Calidad excelente y servicio estupendo. Un sitio precioso frente al mar.",
         "author": "The Famous Gold Watch",
-        "meta": "Hace un mes"
+        "meta": "Hace un mes",
+        "stars": 5
       },
       "r2": {
         "text": "Un restaurante de marisco maravilloso, con platos frescos y de gran calidad. La paella con carpaccio de gamba estaba deliciosa y el calamar, fresquísimo.",
         "author": "amp onpawee",
-        "meta": "Hace 5 meses"
+        "meta": "Hace 5 meses",
+        "stars": 5
       },
       "r3": {
         "text": "Un imprescindible en Vilanova. Ambiente cálido y elegante a la vez, relajado, perfecto para una comida larga con amigos o familia. La comida es excelente y el servicio, de primera.",
         "author": "Earoel Kennedy",
-        "meta": "Hace un año"
+        "meta": "Hace un año",
+        "stars": 5
       },
       "r4": {
         "text": "Comida deliciosa, personal agradable y un sitio bonito: puedes sentarte dentro o fuera. Mejor reservar antes.",
         "author": "Ivan",
-        "meta": "Hace 4 meses"
+        "meta": "Hace 4 meses",
+        "stars": 5
       }
-    }
+    },
+    "starsLabel": "{n} de 5 estrellas"
   },
   "contact": {
     "eyebrow": "Contacto",
@@ -187,5 +194,6 @@
     "langSwitch": "Cambiar de idioma",
     "menuToggle": "Abrir menú de navegación",
     "mapPlaceholder": "Mapa de Google Maps"
-  }
+  },
+  "countryName": "España"
 }

@@ -109,6 +109,17 @@
         </div>
       </div>
       <div class="hero__aside">
+        {{#if heroPhoto}}
+        <figure class="hero__photo">
+          <img src="{{meta.assetBase}}{{heroPhoto.src}}" alt="{{t.hero.photoAlt}}" width="900" height="675" fetchpriority="high" decoding="async">
+          {{#if heroPhoto.credit}}
+          <figcaption data-photo-credit>
+            {{t.hero.photoCredit}}:
+            {{#if heroPhoto.creditUrl}}<a href="{{heroPhoto.creditUrl}}" target="_blank" rel="noopener nofollow">{{heroPhoto.credit}}</a>{{else}}{{heroPhoto.credit}}{{/if}}
+          </figcaption>
+          {{/if}}
+        </figure>
+        {{/if}}
         <div class="hero__card">
           <div class="rating">
             <span class="rating__star" aria-hidden="true">

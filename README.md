@@ -7,19 +7,21 @@ runtime. Everything is plain HTML, CSS and a small progressive-enhancement scrip
 
 ## Live site
 
-- Spanish (default): `/`
-- Catalan: `/ca/`
+- Catalan (default): `/`
+- Spanish: `/es/`
 - English: `/en/`
 
 ## Structure
 
 ```
-index.html              Spanish (default locale)
-ca/index.html           Catalan
+index.html              Catalan (default locale)
+es/index.html           Spanish
 en/index.html           English
+ca/index.html           redirect to / (the default locale used to live here)
 src/template.html       single template used by the build
 src/data.json           business data (address, phone, coordinates, rating)
-src/i18n/{es,ca,en}.json  all copy, per locale
+src/locales.json        locale list, which one is default, hreflang codes
+src/i18n/{ca,es,en}.json  all copy, per locale
 scripts/build.mjs       emits the three locale pages + sitemap.xml, robots.txt, site.webmanifest
 scripts/assets.mjs      generates app icons and the Open Graph image
 scripts/card.mjs        generates assets/photos/handover.png (10.5 x 14.5 cm @300 dpi)

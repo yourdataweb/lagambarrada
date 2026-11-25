@@ -446,8 +446,45 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .hero__aside {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
   justify-content: flex-end;
 }
+
+/* real business photo: top half, always credited (Google requires the attribution) */
+.hero__photo {
+  margin: 0;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .28);
+  box-shadow: var(--shadow-lg);
+  background: var(--sea-800);
+}
+.hero__photo img {
+  display: block;
+  width: 100%;
+  height: clamp(13rem, 26vh, 20rem);
+  object-fit: cover;
+  object-position: center;
+}
+.hero__photo figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: .45rem .7rem;
+  font-size: .68rem;
+  line-height: 1.35;
+  color: rgba(253, 250, 244, .92);
+  background: linear-gradient(to top, rgba(6, 32, 42, .88), rgba(6, 32, 42, 0));
+  text-align: right;
+}
+.hero__photo figcaption a {
+  color: rgba(253, 250, 244, .92);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hero__photo figcaption a:hover { color: #fff; }
 .hero__card {
   width: min(100%, 22rem);
   background: rgba(253, 250, 244, .96);

@@ -13,6 +13,38 @@
   "website": "https://www.lagambarrada.com/",
   "rating": 4.6,
   "ratingCount": 1009,
-  "cuisines": ["mediterranean", "tapas", "spanish", "european"],
-  "siteUrl": "https://yourdataweb.github.io/lagambarrada"
+  "siteUrl": "https://yourdataweb.github.io/lagambarrada",
+  "schemaType": "Restaurant",
+  "phoneIsMobile": false,
+  "priceRange": "€€",
+  "servesCuisine": [
+    "Mediterranean",
+    "Spanish",
+    "Tapas",
+    "European"
+  ],
+  "mapsPlaceUri": "https://maps.google.com/?cid=2712153289287698489",
+  "mapsReviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x12a387115aeea807:0x25a3810c08668839!9m1!1b1",
+  "plusCode": "6P8G+4P Vilanova i la Geltrú",
+  "acceptsReservations": true,
+  "outdoorSeating": true,
+  "goodForGroups": true,
+  "goodForChildren": true,
+  "servesDessert": true,
+  "servesCoffee": true,
+  "acceptsCards": true,
+  "wheelchairAccessible": true,
+  "placeId": "ChIJB6juWhGHoxIROYhmCAyBoyU",
+  "heroPhoto": "",
+  "photoCredit": "",
+  "photoCreditUrl": "",
+  "manifestTheme": "#0a2f3b",
+  "manifestBackground": "#fdfaf4",
+  "accent": "#0a2f3b",
+  "deep": "#06202a",
+  "gold": "#d9a02c",
+  "light": "#8fc4cf",
+  "redirects": {
+    "ca": "/"
+  }
 }
