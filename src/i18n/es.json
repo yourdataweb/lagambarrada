@@ -1,0 +1,191 @@
+{
+  "lang": "es",
+  "locale": "es_ES",
+  "ogLocale": "es_ES",
+  "pathPrefix": "./",
+  "meta": {
+    "title": "La Gambarrada · Restaurante mediterráneo en Vilanova i la Geltrú",
+    "description": "Cocina mediterránea y de mar en el Passeig del Carme, 22, Vilanova i la Geltrú. Pescado fresco, arroces y tapas frente al mar. Reserva por teléfono: 934 86 07 13.",
+    "ogAlt": "La Gambarrada, restaurante mediterráneo en Vilanova i la Geltrú"
+  },
+  "brand": {
+    "sub": "Vilanova i la Geltrú"
+  },
+  "nav": {
+    "about": "El restaurante",
+    "menu": "Cocina",
+    "reviews": "Opiniones",
+    "contact": "Contacto",
+    "skip": "Ir al contenido principal",
+    "label": "Navegación principal"
+  },
+  "hero": {
+    "eyebrow": "Vilanova i la Geltrú · Passeig del Carme",
+    "title": "Cocina de mar, brasa y memoria mediterránea",
+    "subtitle": "Un restaurante de barrio junto al paseo, donde el pescado llega fresco y el fuego hace el resto. Arroces, tapas y platos para compartir sin prisa.",
+    "ctaPrimary": "Ver cómo llegar",
+    "ctaSecondary": "Llamar al restaurante",
+    "viewOnGoogle": "Ver ficha en Google",
+    "point1": "Cocina a la brasa de leña y pescado fresco de lonja",
+    "point2": "Terraza exterior junto al paseo marítimo",
+    "point3": "Pago con tarjeta y espacio accesible",
+    "ratingLabel": "valoración media",
+    "ratingReviews": "opiniones"
+  },
+  "about": {
+    "eyebrow": "El restaurante",
+    "title": "Un clásico marinero de Vilanova",
+    "lead": "La Gambarrada es una casa de comidas mediterránea en el Passeig del Carme, a dos pasos del puerto. Producto de temporada, brasa de leña y una carta que mira al mar.",
+    "body1": "La cocina parte de lo que trae la lonja: mejillones a la brasa con romero, chipirones, arroces de marisco y pescado de roca. La mano en la brasa y el punto exacto del caldo son la seña de la casa.",
+    "body2": "El comedor es luminoso y relajado, con mesas fuera para los días de sol. Sirve igual de bien para una comida larga en familia que para una cena con amigos.",
+    "statRatingLabel": "Valoración",
+    "statReviewsLabel": "Opiniones",
+    "statTypeLabel": "Cocina",
+    "statTypeValue": "Mediterránea",
+    "statPlaceLabel": "Ubicación",
+    "statRating": "en Google",
+    "statReviews": "opiniones verificadas",
+    "statType": "cocina de mar",
+    "statPlace": "junto al paseo"
+  },
+  "features": {
+    "eyebrow": "Servicios",
+    "title": "Todo lo que necesitas saber antes de venir",
+    "items": {
+      "dineIn": {
+        "title": "Comer en el local",
+        "text": "Servicio en sala y en la terraza del paseo."
+      },
+      "reserve": {
+        "title": "Se recomienda reservar",
+        "text": "Acepta reservas, sobre todo para fines de semana y grupos."
+      },
+      "outdoor": {
+        "title": "Terraza exterior",
+        "text": "Mesas al aire libre frente al mar, con sombra."
+      },
+      "groups": {
+        "title": "Ideal para grupos",
+        "text": "Mesas grandes y platos para compartir en el centro."
+      },
+      "kids": {
+        "title": "Apto para familias",
+        "text": "Ambiente tranquilo, también para comer con niños."
+      },
+      "dessert": {
+        "title": "Postres y café",
+        "text": "Postres caseros para cerrar la comida y buen café."
+      },
+      "payment": {
+        "title": "Pago con tarjeta",
+        "text": "Tarjeta de crédito y débito, pago sin contacto y efectivo."
+      },
+      "access": {
+        "title": "Accesible",
+        "text": "Entrada, asientos y aseo adaptados para silla de ruedas."
+      },
+      "parking": {
+        "title": "Aparcamiento cerca",
+        "text": "Aparcamiento de pago en el paseo y zona azul en la calle."
+      }
+    }
+  },
+  "menu": {
+    "eyebrow": "Cocina",
+    "title": "Lo que sale de la brasa",
+    "lead": "La carta cambia con la temporada y con lo que entra en la lonja. Estos son los platos por los que más se conoce la casa.",
+    "items": {
+      "mussels": {
+        "title": "Mejillones a la brasa con romero",
+        "text": "Al fuego de leña, con romero y un buen pan para mojar."
+      },
+      "croquettes": {
+        "title": "Croquetas de la casa",
+        "text": "Cremosas por dentro, crujientes por fuera. Nunca sobran."
+      },
+      "squid": {
+        "title": "Chipirones y calamar",
+        "text": "Frescos, en su punto, apenas marcados por la brasa."
+      },
+      "rice": {
+        "title": "Arroces de marisco",
+        "text": "Paella y arroces caldosos con producto de la lonja."
+      },
+      "tapas": {
+        "title": "Tapas y para picar",
+        "text": "La manera más fácil de probar media carta sin decidir."
+      },
+      "carpaccio": {
+        "title": "Carpaccio de gamba",
+        "text": "Frío, fino y con aceite bueno. Un clásico de la casa."
+      }
+    },
+    "note": "Sin precio ni horarios en esta página: confirma disponibilidad y mesa por teléfono."
+  },
+  "reviews": {
+    "eyebrow": "Opiniones",
+    "title": "Lo que dicen quienes ya han venido",
+    "lead": "Extractos de opiniones publicadas en Google por clientes del restaurante.",
+    "ratingPrefix": "Valoración media de",
+    "reviewsWord": "opiniones",
+    "onGoogle": "en Google",
+    "readAll": "Leer todas las opiniones",
+    "items": {
+      "r1": {
+        "text": "Comida buenísima: mejillones a la brasa con romero, croquetas increíbles y un calamar tiernísimo. Calidad excelente y servicio estupendo. Un sitio precioso frente al mar.",
+        "author": "The Famous Gold Watch",
+        "meta": "Hace un mes"
+      },
+      "r2": {
+        "text": "Un restaurante de marisco maravilloso, con platos frescos y de gran calidad. La paella con carpaccio de gamba estaba deliciosa y el calamar, fresquísimo.",
+        "author": "amp onpawee",
+        "meta": "Hace 5 meses"
+      },
+      "r3": {
+        "text": "Un imprescindible en Vilanova. Ambiente cálido y elegante a la vez, relajado, perfecto para una comida larga con amigos o familia. La comida es excelente y el servicio, de primera.",
+        "author": "Earoel Kennedy",
+        "meta": "Hace un año"
+      },
+      "r4": {
+        "text": "Comida deliciosa, personal agradable y un sitio bonito: puedes sentarte dentro o fuera. Mejor reservar antes.",
+        "author": "Ivan",
+        "meta": "Hace 4 meses"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contacto",
+    "title": "Dónde estamos",
+    "lead": "En el Passeig del Carme, junto al paseo marítimo de Vilanova i la Geltrú. Llámanos para reservar mesa.",
+    "addressLabel": "Dirección",
+    "phoneLabel": "Teléfono",
+    "phoneNote": "Llámanos para reservar",
+    "webLabel": "Web del restaurante",
+    "mapsLabel": "Abrir en Google Maps",
+    "mapTitle": "Mapa con la ubicación de La Gambarrada en Vilanova i la Geltrú",
+    "mapNote": "El mapa se carga solo si aceptas las cookies de terceros.",
+    "mapLoad": "Cargar mapa",
+    "plusCodeLabel": "Plus Code"
+  },
+  "footer": {
+    "tagline": "Cocina mediterránea en Vilanova i la Geltrú.",
+    "navTitle": "Navegación",
+    "contactTitle": "Contacto",
+    "legalTitle": "Aviso",
+    "legal": "Esta página es una ficha informativa del restaurante. Para reservas y cambios en la carta, contacta directamente con el establecimiento.",
+    "rights": "Todos los derechos reservados.",
+    "siteLink": "Web oficial",
+    "backToTop": "Volver arriba"
+  },
+  "cookies": {
+    "text": "Usamos solo cookies técnicas necesarias para que la web funcione. Si cargas el mapa de Google, aceptas las cookies de terceros de Google Maps.",
+    "accept": "Aceptar",
+    "reject": "Solo esenciales",
+    "policy": "Más información"
+  },
+  "a11y": {
+    "langSwitch": "Cambiar de idioma",
+    "menuToggle": "Abrir menú de navegación",
+    "mapPlaceholder": "Mapa de Google Maps"
+  }
+}

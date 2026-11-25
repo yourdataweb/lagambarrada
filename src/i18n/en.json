@@ -1,0 +1,191 @@
+{
+  "lang": "en",
+  "locale": "en_GB",
+  "ogLocale": "en_GB",
+  "pathPrefix": "../",
+  "meta": {
+    "title": "La Gambarrada · Mediterranean restaurant in Vilanova i la Geltrú",
+    "description": "Mediterranean seafood cooking at Passeig del Carme, 22, Vilanova i la Geltrú. Fresh fish, rice dishes and tapas by the sea. Call to book: 934 86 07 13.",
+    "ogAlt": "La Gambarrada, Mediterranean restaurant in Vilanova i la Geltrú"
+  },
+  "brand": {
+    "sub": "Vilanova i la Geltrú"
+  },
+  "nav": {
+    "about": "The restaurant",
+    "menu": "Kitchen",
+    "reviews": "Reviews",
+    "contact": "Contact",
+    "skip": "Skip to main content",
+    "label": "Main navigation"
+  },
+  "hero": {
+    "eyebrow": "Vilanova i la Geltrú · Passeig del Carme",
+    "title": "Sea cooking, wood fire and Mediterranean memory",
+    "subtitle": "A neighbourhood restaurant on the promenade, where the fish arrives fresh and the fire does the rest. Rice dishes, tapas and plates made for sharing.",
+    "ctaPrimary": "Get directions",
+    "ctaSecondary": "Call the restaurant",
+    "viewOnGoogle": "View on Google",
+    "point1": "Wood-fire cooking and fresh fish from the market",
+    "point2": "Outdoor terrace on the seafront promenade",
+    "point3": "Card payments and step-free access",
+    "ratingLabel": "average rating",
+    "ratingReviews": "reviews"
+  },
+  "about": {
+    "eyebrow": "The restaurant",
+    "title": "A seafaring classic in Vilanova",
+    "lead": "La Gambarrada is a Mediterranean eating house on the Passeig del Carme, a couple of steps from the port. Seasonal produce, a wood fire and a menu that looks out to sea.",
+    "body1": "The kitchen starts from whatever the fish market brings in: wood-fired mussels with rosemary, baby squid, seafood rice and rock fish. The hand over the fire and the exact point of the broth are the house signature.",
+    "body2": "The dining room is bright and unhurried, with tables outside for sunny days. It works as well for a long family lunch as for dinner with friends.",
+    "statRatingLabel": "Rating",
+    "statReviewsLabel": "Reviews",
+    "statTypeLabel": "Cooking",
+    "statTypeValue": "Mediterranean",
+    "statPlaceLabel": "Location",
+    "statRating": "on Google",
+    "statReviews": "verified reviews",
+    "statType": "seafood cooking",
+    "statPlace": "on the promenade"
+  },
+  "features": {
+    "eyebrow": "Practical",
+    "title": "What you need to know before you come",
+    "items": {
+      "dineIn": {
+        "title": "Dine in",
+        "text": "Table service indoors and on the promenade terrace."
+      },
+      "reserve": {
+        "title": "Reservations recommended",
+        "text": "The restaurant takes bookings, especially at weekends and for groups."
+      },
+      "outdoor": {
+        "title": "Outdoor terrace",
+        "text": "Tables in the open air facing the sea, in the shade."
+      },
+      "groups": {
+        "title": "Good for groups",
+        "text": "Large tables and sharing plates at the centre of the menu."
+      },
+      "kids": {
+        "title": "Family friendly",
+        "text": "A calm room that works for lunch with children too."
+      },
+      "dessert": {
+        "title": "Dessert and coffee",
+        "text": "House desserts to close the meal, plus proper coffee."
+      },
+      "payment": {
+        "title": "Card payments",
+        "text": "Credit and debit cards, contactless payment and cash."
+      },
+      "access": {
+        "title": "Step-free access",
+        "text": "Wheelchair-accessible entrance, seating and restroom."
+      },
+      "parking": {
+        "title": "Parking nearby",
+        "text": "Paid car park on the promenade and metered street parking."
+      }
+    }
+  },
+  "menu": {
+    "eyebrow": "Kitchen",
+    "title": "What comes off the fire",
+    "lead": "The menu changes with the season and with whatever enters the fish market. These are the plates the house is best known for.",
+    "items": {
+      "mussels": {
+        "title": "Wood-fired mussels with rosemary",
+        "text": "Over a wood fire with rosemary, and good bread to mop up."
+      },
+      "croquettes": {
+        "title": "House croquettes",
+        "text": "Creamy inside, crisp outside. They never last long."
+      },
+      "squid": {
+        "title": "Baby squid and squid",
+        "text": "Fresh, cooked just so, barely marked by the fire."
+      },
+      "rice": {
+        "title": "Seafood rice dishes",
+        "text": "Paella and soupy rice with produce from the fish market."
+      },
+      "tapas": {
+        "title": "Tapas and small plates",
+        "text": "The easiest way to try half the menu without deciding."
+      },
+      "carpaccio": {
+        "title": "Prawn carpaccio",
+        "text": "Cold, thin and dressed with good oil. A house classic."
+      }
+    },
+    "note": "No prices or opening hours on this page: confirm availability and a table by phone."
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "title": "What guests say after visiting",
+    "lead": "Extracts from reviews published on Google by guests of the restaurant.",
+    "ratingPrefix": "Rated",
+    "reviewsWord": "reviews",
+    "onGoogle": "on Google",
+    "readAll": "Read all reviews",
+    "items": {
+      "r1": {
+        "text": "Extremely good food: wood-fired mussels with rosemary, amazing croquettes and squid that was so tender. Excellent quality and brilliant service. A lovely spot right on the seafront.",
+        "author": "The Famous Gold Watch",
+        "meta": "A month ago"
+      },
+      "r2": {
+        "text": "A wonderful seafood restaurant with fresh, high-quality dishes. The paella with prawn carpaccio was delicious and the squid was incredibly fresh.",
+        "author": "amp onpawee",
+        "meta": "5 months ago"
+      },
+      "r3": {
+        "text": "An absolute must-visit in Vilanova. Warm and welcoming yet stylish and relaxed, perfect for a long lunch or dinner with friends and family. The food is outstanding and the service top-notch.",
+        "author": "Earoel Kennedy",
+        "meta": "A year ago"
+      },
+      "r4": {
+        "text": "Delicious food, friendly staff, a nice place: you can sit inside or outside. Better to book ahead.",
+        "author": "Ivan",
+        "meta": "4 months ago"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Where to find us",
+    "lead": "On the Passeig del Carme, along the seafront promenade of Vilanova i la Geltrú. Call us to book a table.",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "phoneNote": "Call us to book",
+    "webLabel": "Restaurant website",
+    "mapsLabel": "Open in Google Maps",
+    "mapTitle": "Map showing the location of La Gambarrada in Vilanova i la Geltrú",
+    "mapNote": "The map only loads if you accept third-party cookies.",
+    "mapLoad": "Load the map",
+    "plusCodeLabel": "Plus Code"
+  },
+  "footer": {
+    "tagline": "Mediterranean cooking in Vilanova i la Geltrú.",
+    "navTitle": "Navigation",
+    "contactTitle": "Contact",
+    "legalTitle": "Notice",
+    "legal": "This page is an information sheet for the restaurant. For bookings and menu changes, please contact the establishment directly.",
+    "rights": "All rights reserved.",
+    "siteLink": "Official website",
+    "backToTop": "Back to top"
+  },
+  "cookies": {
+    "text": "We only use technical cookies needed for the site to work. If you load the Google map, you accept third-party cookies from Google Maps.",
+    "accept": "Accept",
+    "reject": "Essentials only",
+    "policy": "More information"
+  },
+  "a11y": {
+    "langSwitch": "Change language",
+    "menuToggle": "Open navigation menu",
+    "mapPlaceholder": "Google Maps map"
+  }
+}

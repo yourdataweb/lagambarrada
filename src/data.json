@@ -1,0 +1,18 @@
+{
+  "name": "La Gambarrada",
+  "legalName": "Restaurant La Gambarrada",
+  "street": "Pg. del Carme, 22",
+  "postalCode": "08800",
+  "city": "Vilanova i la Geltrú",
+  "region": "Barcelona",
+  "country": "ES",
+  "latitude": 41.2153657,
+  "longitude": 1.7267949,
+  "phoneNational": "934 86 07 13",
+  "phoneE164": "+34934860713",
+  "website": "https://www.lagambarrada.com/",
+  "rating": 4.6,
+  "ratingCount": 1009,
+  "cuisines": ["mediterranean", "tapas", "spanish", "european"],
+  "siteUrl": "https://yourdataweb.github.io/lagambarrada"
+}
