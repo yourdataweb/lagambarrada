@@ -13,7 +13,6 @@
   "website": "https://www.lagambarrada.com/",
   "rating": 4.6,
   "ratingCount": 1009,
-  "siteUrl": "https://yourdataweb.github.io/lagambarrada",
   "schemaType": "Restaurant",
   "phoneIsMobile": false,
   "priceRange": "€€",
@@ -46,5 +45,8 @@
   "light": "#8fc4cf",
   "redirects": {
     "ca": "/"
-  }
+  },
+  "slug": "lagambarrada",
+  "siteDomain": "vilanovailageltru.info",
+  "photoSelector": ".hero__photo img"
 }

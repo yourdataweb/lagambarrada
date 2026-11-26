@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://yourdataweb.github.io/lagambarrada/</loc>
-    <xhtml:link rel="alternate" hreflang="ca-ES" href="https://yourdataweb.github.io/lagambarrada/"/>
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://yourdataweb.github.io/lagambarrada/es/"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://yourdataweb.github.io/lagambarrada/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourdataweb.github.io/lagambarrada/"/>
-    <lastmod>2026-11-25</lastmod>
+    <loc>https://lagambarrada.vilanovailageltru.info/</loc>
+    <xhtml:link rel="alternate" hreflang="ca-ES" href="https://lagambarrada.vilanovailageltru.info/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://lagambarrada.vilanovailageltru.info/es/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://lagambarrada.vilanovailageltru.info/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lagambarrada.vilanovailageltru.info/"/>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yourdataweb.github.io/lagambarrada/es/</loc>
-    <xhtml:link rel="alternate" hreflang="ca-ES" href="https://yourdataweb.github.io/lagambarrada/"/>
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://yourdataweb.github.io/lagambarrada/es/"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://yourdataweb.github.io/lagambarrada/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourdataweb.github.io/lagambarrada/"/>
-    <lastmod>2026-11-25</lastmod>
+    <loc>https://lagambarrada.vilanovailageltru.info/es/</loc>
+    <xhtml:link rel="alternate" hreflang="ca-ES" href="https://lagambarrada.vilanovailageltru.info/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://lagambarrada.vilanovailageltru.info/es/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://lagambarrada.vilanovailageltru.info/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lagambarrada.vilanovailageltru.info/"/>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yourdataweb.github.io/lagambarrada/en/</loc>
-    <xhtml:link rel="alternate" hreflang="ca-ES" href="https://yourdataweb.github.io/lagambarrada/"/>
-    <xhtml:link rel="alternate" hreflang="es-ES" href="https://yourdataweb.github.io/lagambarrada/es/"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://yourdataweb.github.io/lagambarrada/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yourdataweb.github.io/lagambarrada/"/>
-    <lastmod>2026-11-25</lastmod>
+    <loc>https://lagambarrada.vilanovailageltru.info/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ca-ES" href="https://lagambarrada.vilanovailageltru.info/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://lagambarrada.vilanovailageltru.info/es/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://lagambarrada.vilanovailageltru.info/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lagambarrada.vilanovailageltru.info/"/>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

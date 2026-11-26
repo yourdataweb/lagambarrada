@@ -1,36 +1,44 @@
-# La Gambarrada — website
+# Restaurant La Gambarrada — website
 
-Static marketing site for **Restaurant La Gambarrada** (Passeig del Carme, 22 — Vilanova i la Geltrú).
+Static site for **Restaurant La Gambarrada**, a Mediterranean restaurant at Pg. del Carme, 22, Vilanova i la Geltrú.
 
-Three languages, server-rendered HTML per locale, no framework, no build step required at
-runtime. Everything is plain HTML, CSS and a small progressive-enhancement script.
+Three languages, server-rendered HTML per locale, plain CSS and one small
+progressive-enhancement script. No framework, no runtime dependencies.
 
 ## Live site
 
-- Catalan (default): `/`
-- Spanish: `/es/`
-- English: `/en/`
+- **Catalan (default):** <https://lagambarrada.vilanovailageltru.info/>
+- **Spanish:** <https://lagambarrada.vilanovailageltru.info/es/>
+- **English:** <https://lagambarrada.vilanovailageltru.info/en/>
 
-## Structure
+## Page structure
+
+Top bar with the address and language switch, sticky header. A hero led by the
+seafront and the rating proof, then the restaurant itself, what to expect when you visit,
+the kitchen (wood-fired mussels, rice dishes, tapas), guest reviews, and contact with phone,
+address and the consent-gated map.
+
+## Repo layout
 
 ```
-index.html              Catalan (default locale)
-es/index.html           Spanish
-en/index.html           English
-ca/index.html           redirect to / (the default locale used to live here)
-src/template.html       single template used by the build
-src/data.json           business data (address, phone, coordinates, rating)
-src/locales.json        locale list, which one is default, hreflang codes
-src/i18n/{ca,es,en}.json  all copy, per locale
-scripts/build.mjs       emits the three locale pages + sitemap.xml, robots.txt, site.webmanifest
-scripts/assets.mjs      generates app icons and the Open Graph image
-scripts/card.mjs        generates assets/photos/handover.png (10.5 x 14.5 cm @300 dpi)
-scripts/verify.mjs      checks the built output in a headless browser
-assets/css/styles.css   all styles, responsive from 320 px up
-assets/js/main.js       mobile navigation, scroll reveal, cookie consent, lazy map
-assets/fonts/           self-hosted Fraunces and Inter (woff2 subset)
-assets/img/             logo, icons, hero artwork, OG image
-assets/photos/handover.png  handover card (tablet capture of the top section + QR, 10.5 x 14.5 cm @300 dpi)
+index.html                 Catalan (default locale)
+es/index.html              Spanish
+en/index.html              English
+ca/index.html              redirect to / (the default locale used to live here)
+src/template.html          the single template the build renders
+src/data.json              business data (address, phone, coordinates, rating)
+src/locales.json           locale list, which one is default, hreflang codes
+src/i18n/{ca,es,en}.json   all copy, per locale
+scripts/build.mjs          renders the locale pages + sitemap, robots, manifest
+scripts/assets.mjs         app icons and the Open Graph image
+scripts/card.mjs           handover card, 10.5 x 14.5 cm @ 300 dpi
+scripts/verify.mjs         headless checks against the built output
+assets/css/styles.css      all styles, responsive from 320 px up
+assets/js/main.js          navigation, reveal, cookie consent, lazy map
+assets/fonts/              self-hosted Fraunces and Inter (woff2 subsets)
+assets/img/                mark, icons, hero photo, OG image
+assets/photos/handover.png handover card with a QR to the live site
+.github/workflows/         deploy to S3 on push to main
 ```
 
 ## Build
@@ -38,14 +46,14 @@ assets/photos/handover.png  handover card (tablet capture of the top section + Q
 Requires Node 20+ and `puppeteer` for the asset scripts.
 
 ```bash
-node scripts/build.mjs     # regenerate the three locale pages
+node scripts/build.mjs     # render the locale pages
 node scripts/assets.mjs    # regenerate icons and og-image.jpg
 node scripts/card.mjs      # regenerate the handover card
 node scripts/verify.mjs    # headless verification of the built output
 ```
 
-`scripts/build.mjs` fails on any unresolved template placeholder or on invalid JSON-LD, so a
-green build means every string was actually interpolated.
+`build.mjs` fails on an unresolved template placeholder, an empty `href`/`src`, invalid
+JSON-LD, or a feature icon that has no entry in `scripts/icons.json`.
 
 ## Editing content
 
@@ -53,23 +61,23 @@ Text lives in `src/i18n/*.json`; shared business facts live in `src/data.json`. 
 run `node scripts/build.mjs`, commit the regenerated HTML. Do not hand-edit the generated
 `index.html` files — they are overwritten.
 
+## Deploy
+
+Pushing to `main` runs `.github/workflows/deploy-aws.yml`: it builds the site, authenticates
+to AWS with OIDC (no stored keys) and uploads to
+`s3://dr-static-websites/vilanovailageltru.info/lagambarrada/`. The subdomain is served from the bucket's CDN, so a
+deploy is live within a few minutes.
+
 ## Technical notes
 
-- **SEO**: per-locale `<title>`, description, canonical, reciprocal `hreflang` (including
-  `x-default`), Open Graph and Twitter cards, `sitemap.xml` with alternates, `robots.txt`,
-  and `Restaurant` structured data (address, geo, telephone, cuisine, aggregate rating).
-- **Accessibility**: single `h1` per page, skip link, landmark elements, visible focus rings,
-  4.5:1 body contrast, `aria-expanded` on the navigation toggle, Escape closes the drawer,
-  descriptive `alt` on content images, decorative SVG marked `aria-hidden`.
-- **Performance**: self-hosted woff2 subsets preloaded, one CSS file, one deferred JS file,
-  SVG hero artwork, no third-party requests until the visitor opts into the map.
-- **Privacy / GDPR**: only technical storage; the Google Maps embed is not requested until the
-  visitor accepts third-party cookies (or presses "Load the map"). Choice is stored in
-  `localStorage` under `lg-cookie-consent`.
-- **Design**: Mediterranean palette (deep sea, sand, ember), Fraunces for headings and Inter
-  for text. No price-per-person and no opening hours are displayed.
-
-## Hosting
-
-GitHub Pages, served from the `main` branch root. All asset paths are relative, so the site
-also works from any subdirectory or S3 prefix.
+- **SEO** — per-locale `<title>`, description, canonical, reciprocal `hreflang` including
+  `x-default`, Open Graph and Twitter cards, `sitemap.xml` with alternates, `robots.txt`, and
+  `Restaurant` structured data. Every absolute URL derives from the site's own domain.
+- **Accessibility** — one `h1` per page, skip link, landmark elements, visible focus rings,
+  body text at or above 4.5:1 contrast, `aria-expanded` on the navigation toggle, Escape
+  closes the drawer, and content stays readable with JavaScript disabled.
+- **Performance** — self-hosted woff2 subsets preloaded, one CSS file, one deferred JS file,
+  no third-party requests until the visitor opts in.
+- **Privacy** — the cookie notice offers accept and reject. Nothing is fetched from Google —
+  analytics script or map iframe — until the visitor accepts; rejecting loads neither and is
+  remembered.

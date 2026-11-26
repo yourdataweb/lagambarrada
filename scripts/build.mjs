@@ -108,7 +108,11 @@ function render(nodes, ctx) {
 /* ---- data ---- */
 const biz = JSON.parse(read("src/data.json"));
 const LANGS = JSON.parse(read("src/locales.json"));
-const SITE_URL = (process.env.SITE_URL || biz.siteUrl).replace(/\/?$/, "");
+/* Every absolute URL derives from the code name and the publishing domain, so a
+   site cannot inherit a stale host. */
+const SITE_DOMAIN = biz.siteDomain || "vilanovailageltru.info";
+const CODE_NAME = biz.slug;
+const SITE_URL = (biz.siteUrl || `https://${CODE_NAME}.${SITE_DOMAIN}`).replace(/\/?$/, "");
 const DEFAULT = (LANGS.find((l) => l.default) || LANGS[0]).code;
 const dicts = Object.fromEntries(LANGS.map((l) => [l.code, JSON.parse(read(`src/i18n/${l.code}.json`))]));
 
@@ -259,8 +263,10 @@ for (const [from, to] of Object.entries(biz.redirects || {})) {
   if (LANGS.some((l) => l.dir === from)) continue;
   // resolve against the site's own base path: "/" on a project page would leave
   // /lagambarrada/ and land on the account root
-  const base = new URL(SITE_URL).pathname.replace(/\/?$/, "/");
-  const target = base + String(to).replace(/^\//, "");
+  /* At a subdomain root the redirect must be relative to its own directory:
+     "/" would leave the site and loop or land on the account root. */
+  const depth = String(from).split("/").filter(Boolean).length;
+  const target = depth === 0 ? to : "../".repeat(depth) + String(to).replace(/^\.?\//, "");
   const copy = REDIRECT_COPY[DEFAULT] || REDIRECT_COPY.en;
   const html = `<!DOCTYPE html><html lang="${DEFAULT}"><head><meta charset="utf-8">
 <link rel="canonical" href="${SITE_URL}${to === "/" ? "/" : to}">
