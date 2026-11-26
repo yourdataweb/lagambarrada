@@ -41,6 +41,57 @@
 <link rel="preload" href="./assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./assets/css/components.css">
+
+<script>
+  /* Google Analytics 4 with consent mode. Goes in <head> of every generated page,
+     before any other script. Nothing is fetched from Google until the visitor
+     accepts, and storage stays denied by default even if the tag loads elsewhere. */
+  (function () {
+    var ID = 'G-71LT2Q093H';
+    var KEY = 'cookie-consent-v1';
+    var accepted = false;
+    try { accepted = localStorage.getItem(KEY) === 'accepted'; } catch (e) {}
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    gtag('js', new Date());
+
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+
+    function load() {
+      if (window.__gaLoaded) return;
+      window.__gaLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
+      document.head.appendChild(s);
+      gtag('config', ID);
+    }
+
+    function grant() {
+      load();
+      gtag('consent', 'update', {
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted'
+      });
+    }
+
+    /* The cookie banner calls this from BOTH buttons; nothing touches Google before it runs. */
+    window.__analyticsConsent = function (isAccepted) {
+      try { localStorage.setItem(KEY, isAccepted ? 'accepted' : 'essential'); } catch (e) {}
+      if (isAccepted) grant();
+    };
+
+    if (accepted) grant();
+  })();
+</script>
 <link rel="stylesheet" href="./assets/css/styles.css">
 <script type="application/ld+json">
 {
