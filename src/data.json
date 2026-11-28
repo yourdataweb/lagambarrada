@@ -48,5 +48,8 @@
   },
   "slug": "lagambarrada",
   "siteDomain": "vilanovailageltru.info",
-  "photoSelector": ".hero__photo img"
+  "photoSelector": ".hero__photo img",
+  "offerEnds": "2027-02-25",
+  "buyUrl": "",
+  "offerEmail": ""
 }
